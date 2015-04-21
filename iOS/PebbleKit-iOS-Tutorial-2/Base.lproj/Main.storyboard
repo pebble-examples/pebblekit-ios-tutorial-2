@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6751" systemVersion="13F1066" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="vXZ-lx-hvc">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6736"/>
+        <capability name="Alignment constraints with different attributes" minToolsVersion="5.1"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+    </dependencies>
+    <scenes>
+        <!--View Controller-->
+        <scene sceneID="ufC-wZ-h7g">
+            <objects>
+                <viewController id="vXZ-lx-hvc" customClass="ViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="jyV-Pf-zRb"/>
+                        <viewControllerLayoutGuide type="bottom" id="2fi-mo-0CV"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="kh9-bI-dsS">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hYw-5h-KgD">
+                                <rect key="frame" x="0.0" y="-21" width="42" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="FKG-Gl-SLl">
+                                <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
+                            </scrollView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="FKG-Gl-SLl" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leadingMargin" id="4XC-qk-SAR">
+                                <variation key="heightClass=regular-widthClass=compact" constant="-16"/>
+                            </constraint>
+                            <constraint firstItem="FKG-Gl-SLl" firstAttribute="top" secondItem="jyV-Pf-zRb" secondAttribute="bottom" constant="36" id="84n-ik-y6d"/>
+                            <constraint firstAttribute="centerX" secondItem="hYw-5h-KgD" secondAttribute="centerX" id="JGR-ic-h3G"/>
+                            <constraint firstItem="2fi-mo-0CV" firstAttribute="top" secondItem="FKG-Gl-SLl" secondAttribute="bottom" constant="8" id="cYE-Mj-9cG"/>
+                            <constraint firstItem="hYw-5h-KgD" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leadingMargin" id="hvv-Aj-7TH"/>
+                            <constraint firstAttribute="centerX" secondItem="FKG-Gl-SLl" secondAttribute="centerX" id="r15-Hw-FHP"/>
+                            <constraint firstItem="hYw-5h-KgD" firstAttribute="top" secondItem="jyV-Pf-zRb" secondAttribute="bottom" constant="8" id="zAa-tn-prS"/>
+                        </constraints>
+                        <variation key="default">
+                            <mask key="subviews">
+                                <exclude reference="hYw-5h-KgD"/>
+                                <exclude reference="FKG-Gl-SLl"/>
+                            </mask>
+                            <mask key="constraints">
+                                <exclude reference="cYE-Mj-9cG"/>
+                                <exclude reference="JGR-ic-h3G"/>
+                                <exclude reference="hvv-Aj-7TH"/>
+                                <exclude reference="zAa-tn-prS"/>
+                                <exclude reference="4XC-qk-SAR"/>
+                                <exclude reference="84n-ik-y6d"/>
+                                <exclude reference="r15-Hw-FHP"/>
+                            </mask>
+                        </variation>
+                        <variation key="heightClass=regular-widthClass=compact">
+                            <mask key="subviews">
+                                <include reference="hYw-5h-KgD"/>
+                                <include reference="FKG-Gl-SLl"/>
+                            </mask>
+                            <mask key="constraints">
+                                <include reference="cYE-Mj-9cG"/>
+                                <include reference="JGR-ic-h3G"/>
+                                <include reference="hvv-Aj-7TH"/>
+                                <include reference="zAa-tn-prS"/>
+                                <include reference="4XC-qk-SAR"/>
+                                <include reference="84n-ik-y6d"/>
+                                <include reference="r15-Hw-FHP"/>
+                            </mask>
+                        </variation>
+                    </view>
+                    <connections>
+                        <outlet property="outputLabel" destination="hYw-5h-KgD" id="GtM-kd-JAI"/>
+                        <outlet property="scrollView" destination="FKG-Gl-SLl" id="6d2-m5-Acz"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="x5A-6p-PRh" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="289.5" y="381.75"/>
+        </scene>
+    </scenes>
+</document>
