@@ -6,7 +6,7 @@
 //  Copyright (c) 2013 Pebble Technology. All rights reserved.
 //
 
-#import "PebbleKit.h"
+#import <PebbleKit/PBDefines.h>
 
 /**
  *  Data logging datatypes.
@@ -24,7 +24,7 @@ typedef UInt8 PBDataLoggingType;
 /**
  *  The metadata of a data logging session. Used to identify a session.
  */
-@interface PBDataLoggingSessionMetadata : NSObject <NSSecureCoding, NSCopying>
+PB_EXTERN_CLASS @interface PBDataLoggingSessionMetadata : NSObject <NSSecureCoding, NSCopying>
 
 /**
  *  A tag associated with the session.
@@ -80,6 +80,8 @@ typedef UInt8 PBDataLoggingType;
  */
 - (BOOL)isEqualToDataLoggingSessionMetadata:(PBDataLoggingSessionMetadata *)sessionMetadata;
 @end
+
+@class PBDataLoggingService;
 
 /**
  *  Data logging delegate protocol. The object that implements this protocol
@@ -209,7 +211,7 @@ typedef UInt8 PBDataLoggingType;
  *  The data logging service. Assign a delegate object in order to receive
  *  data from your watchapp.
  */
-@interface PBDataLoggingService : NSObject
+PB_EXTERN_CLASS @interface PBDataLoggingService : NSObject
 
 /**
  *  The delegate that has the responsility of handling callbacks from the

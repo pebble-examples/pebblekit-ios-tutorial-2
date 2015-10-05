@@ -6,32 +6,18 @@
 //  Copyright (c) 2012 Pebble Technology. All rights reserved.
 //
 
+#import <PebbleKit/PBDefines.h>
 #import <Foundation/Foundation.h>
 
 @class PBWatch;
 @class PBDataLoggingService;
 @protocol PBPebbleCentralDelegate;
 
+
 /**
  PebbleCentral plays the central role for client iOS apps (e.g. RunKeeper).
  */
-@interface PBPebbleCentral : NSObject
-
-/**
- @returns The default central singleton instance.
- */
-+ (PBPebbleCentral*)defaultCentral;
-
-/**
- * Adds the default ASL and TTY loggers for CocoaLumberjack using 
- * [DDLog addLogger:[DDASLLogger sharedInstance]] and
- * [DDLog addLogger:[DDTTYLogger sharedInstance]]
- * @note This is separate from +setDebugLogsEnabled in case
- * you would like to add your own custom loggers or implement CocoaLumberjack yourself.
- * @see +setDebugLogsEnabled
- * @see CocoaLumberjack https://github.com/CocoaLumberjack/CocoaLumberjack
- */
-+ (void)addLumberjackLoggers;
+PB_EXTERN_CLASS @interface PBPebbleCentral : NSObject
 
 /**
  *  Enables debug logs. The logs will be routed to the system log (ASL) and
@@ -44,12 +30,12 @@
 /**
  The watches that are currently connected. Do not cache the array because it can change over time.
  */
-@property (nonatomic, readonly, strong) NSArray *connectedWatches;
+@property (nonatomic, readonly, copy) NSArray *connectedWatches;
 
 /**
  The watches that are stored in the user preferences of the application.
  */
-@property (nonatomic, readonly, strong) NSArray *registeredWatches;
+@property (nonatomic, readonly, copy) NSArray *registeredWatches;
 
 /**
  The central's delegate.
@@ -66,14 +52,25 @@
  *  @param uuid The 16 byte UUID of your app.
  *  @note The UUID needs to be set before using either app message or data logging.
  */
-@property (nonatomic, strong, readwrite) NSData *appUUID;
+@property (nonatomic, copy) NSUUID *appUUID;
 
 /**
- *  Verifies the currently set application UUID.
- *  @return YES if the currently set UUID is valid, NO if it is not.
- *  @see -setAppUuid:
+ *  The list of App-UUIDs this PebbleCentral wants to talk to.
+ *  @see addAppUUID:
  */
-- (BOOL)hasValidAppUUID;
+@property (nonatomic, copy) NSSet *appUUIDs;
+
+/**
+ *  Registers a new App-UUID with appUUIDs.
+ *  @see appUUIDs
+ */
+- (void)addAppUUID:(NSUUID *)appUUID;
+
+/**
+ Registers and announces internal Bluetooth services. Might cause a dialog to allow this
+ app to talk to other devices.
+ */
+- (void)run;
 
 /**
  @returns YES if the Pebble iOS app is installed, NO if it is not installed.
@@ -115,5 +112,12 @@
  @param watch The PBWatch object representing the watch that was disconnected.
  */
 - (void)pebbleCentral:(PBPebbleCentral*)central watchDidDisconnect:(PBWatch*)watch;
+
+@end
+
+
+@interface PBPebbleCentral (Unavailable)
+
+- (instancetype)init UNAVAILABLE_ATTRIBUTE;
 
 @end

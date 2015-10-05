@@ -6,9 +6,10 @@
 //  Copyright (c) 2012 Pebble Technology. All rights reserved.
 //
 
+#import <PebbleKit/PBDefines.h>
 #import <Foundation/Foundation.h>
 
-extern NSString *PBErrorDomain;
+PB_EXTERN NSString *PBErrorDomain;
 
 /**
  *  PebbleKit Error codes.
@@ -37,7 +38,10 @@ typedef enum {
   PBErrorCodePebbleAppUnexpectedResponse,
   PBErrorCodeServerNotAvailable,
   PBErrorCodeDownloadFailed,
-  PBErrorCodePebbleNotConnected
+  PBErrorCodePebbleNotConnected,
+  PBErrorCodeMessageTooLong,
+  PBErrorCodeBluetoothDisabled,
+  PBErrorCodeBluetoothLowEnergyHandshakeFailed,
 } PBErrorCode;
 
 @interface NSError (Pebble)
