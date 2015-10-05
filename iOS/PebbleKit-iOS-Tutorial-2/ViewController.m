@@ -41,6 +41,7 @@ int currentPage = 0;
         // Set UUID
         NSUUID *myAppUUID = [[NSUUID alloc] initWithUUIDString:@"3783cff2-5a14-477d-baee-b77bd423d079"];
         [PBPebbleCentral defaultCentral].appUUID = myAppUUID;
+        [[PBPebbleCentral defaultCentral] run];
         
         // Sign up for AppMessage
         [self.watch appMessagesAddReceiveUpdateHandler:^BOOL(PBWatch *watch, NSDictionary *update) {
