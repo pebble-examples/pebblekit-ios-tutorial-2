@@ -78,6 +78,7 @@ typedef NS_ENUM(NSUInteger, AppMessageKey) {
     [super viewDidLoad];
     
     self.currentPage = 0;
+    self.outputLabel.text = @"Waiting for Pebble...";
     
     // Set the delegate to receive PebbleKit events
     self.central = [PBPebbleCentral defaultCentral];
