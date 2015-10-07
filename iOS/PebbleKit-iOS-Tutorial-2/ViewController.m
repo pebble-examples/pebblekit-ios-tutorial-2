@@ -37,30 +37,39 @@ typedef NS_ENUM(NSUInteger, AppMessageKey) {
     self.watch = watch;
     self.outputLabel.text = @"Watch connected!";
     
+    // Keep a weak reference to self to prevent it staying around forever
+    __weak typeof(self) welf = self;
+    
     // Sign up for AppMessage
     [self.watch appMessagesAddReceiveUpdateHandler:^BOOL(PBWatch *watch, NSDictionary *update) {
+        __strong typeof(welf) sself = welf;
+        if(!sself) {
+            // self has been destroyed
+            return NO;
+        }
+        
         // Process incoming messages
         if(update[@(KeyButtonUp)]) {
             // Up button was pressed!
-            self.outputLabel.text = @"UP";
+            sself.outputLabel.text = @"UP";
             
-            if(self.currentPage > 0) {
-                self.currentPage--;
+            if(sself.currentPage > 0) {
+                sself.currentPage--;
             }
         }
         
         if(update[@(KeyButtonDown)]) {
             // Down button pressed!
-            self.outputLabel.text = @"DOWN";
+            sself.outputLabel.text = @"DOWN";
             
-            if(self.currentPage < 2) {
-                self.currentPage++;
+            if(sself.currentPage < 2) {
+                sself.currentPage++;
             }
         }
         
         // Get the size of the main view and update the current page offset
-        CGSize windowSize = CGSizeMake(self.view.frame.size.width, self.view.frame.size.height);
-        [self.scrollView setContentOffset:CGPointMake(self.currentPage * windowSize.width, 0) animated:YES];
+        CGSize windowSize = CGSizeMake(sself.view.frame.size.width, sself.view.frame.size.height);
+        [sself.scrollView setContentOffset:CGPointMake(sself.currentPage * windowSize.width, 0) animated:YES];
         
         return YES;
     }];
