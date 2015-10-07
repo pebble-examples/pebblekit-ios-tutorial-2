@@ -30,8 +30,8 @@ typedef NS_ENUM(NSUInteger, AppMessageKey) {
 @implementation ViewController
 
 
--(void)pebbleCentral:(PBPebbleCentral *)central watchDidConnect:(PBWatch *)watch isNew:(BOOL)isNew {
-    if(self.watch) {
+- (void)pebbleCentral:(PBPebbleCentral *)central watchDidConnect:(PBWatch *)watch isNew:(BOOL)isNew {
+    if (self.watch) {
         return;
     }
     self.watch = watch;
@@ -43,26 +43,26 @@ typedef NS_ENUM(NSUInteger, AppMessageKey) {
     // Sign up for AppMessage
     [self.watch appMessagesAddReceiveUpdateHandler:^BOOL(PBWatch *watch, NSDictionary *update) {
         __strong typeof(welf) sself = welf;
-        if(!sself) {
+        if (!sself) {
             // self has been destroyed
             return NO;
         }
         
         // Process incoming messages
-        if(update[@(KeyButtonUp)]) {
+        if (update[@(KeyButtonUp)]) {
             // Up button was pressed!
             sself.outputLabel.text = @"UP";
             
-            if(sself.currentPage > 0) {
+            if (sself.currentPage > 0) {
                 sself.currentPage--;
             }
         }
         
-        if(update[@(KeyButtonDown)]) {
+        if (update[@(KeyButtonDown)]) {
             // Down button pressed!
             sself.outputLabel.text = @"DOWN";
             
-            if(sself.currentPage < 2) {
+            if (sself.currentPage < 2) {
                 sself.currentPage++;
             }
         }
@@ -75,9 +75,9 @@ typedef NS_ENUM(NSUInteger, AppMessageKey) {
     }];
 }
 
--(void)pebbleCentral:(PBPebbleCentral *)central watchDidDisconnect:(PBWatch *)watch {
+- (void)pebbleCentral:(PBPebbleCentral *)central watchDidDisconnect:(PBWatch *)watch {
     // Only remove reference if it was the current active watch
-    if(self.watch == watch) {
+    if (self.watch == watch) {
         self.watch = nil;
         self.outputLabel.text = @"Watch disconnected";
     }
