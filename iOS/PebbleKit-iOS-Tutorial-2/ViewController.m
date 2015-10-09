@@ -9,71 +9,95 @@
 #import "ViewController.h"
 #import "PebbleKit/PebbleKit.h"
 
-#define KEY_BUTTON_UP   0
-#define KEY_BUTTON_DOWN 1
+// AppMessage keys
+typedef NS_ENUM(NSUInteger, AppMessageKey) {
+    KeyButtonUp = 0,
+    KeyButtonDown
+};
 
 @interface ViewController () <PBPebbleCentralDelegate>
 
-@property PBWatch *watch;
+@property (weak, nonatomic) PBPebbleCentral *central;
+@property (weak, nonatomic) PBWatch *watch;
 
 @property (weak, nonatomic) IBOutlet UILabel *outputLabel;
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
+
+@property (nonatomic) NSUInteger currentPage;
 
 @end
 
 @implementation ViewController
 
-int currentPage = 0;
+
+- (void)pebbleCentral:(PBPebbleCentral *)central watchDidConnect:(PBWatch *)watch isNew:(BOOL)isNew {
+    if (self.watch) {
+        return;
+    }
+    self.watch = watch;
+    self.outputLabel.text = @"Watch connected!";
+    
+    // Keep a weak reference to self to prevent it staying around forever
+    __weak typeof(self) welf = self;
+    
+    // Sign up for AppMessage
+    [self.watch appMessagesAddReceiveUpdateHandler:^BOOL(PBWatch *watch, NSDictionary *update) {
+        __strong typeof(welf) sself = welf;
+        if (!sself) {
+            // self has been destroyed
+            return NO;
+        }
+        
+        // Process incoming messages
+        if (update[@(KeyButtonUp)]) {
+            // Up button was pressed!
+            sself.outputLabel.text = @"UP";
+            
+            if (sself.currentPage > 0) {
+                sself.currentPage--;
+            }
+        }
+        
+        if (update[@(KeyButtonDown)]) {
+            // Down button pressed!
+            sself.outputLabel.text = @"DOWN";
+            
+            if (sself.currentPage < 2) {
+                sself.currentPage++;
+            }
+        }
+        
+        // Get the size of the main view and update the current page offset
+        CGSize windowSize = CGSizeMake(sself.view.frame.size.width, sself.view.frame.size.height);
+        [sself.scrollView setContentOffset:CGPointMake(sself.currentPage * windowSize.width, 0) animated:YES];
+        
+        return YES;
+    }];
+}
+
+- (void)pebbleCentral:(PBPebbleCentral *)central watchDidDisconnect:(PBWatch *)watch {
+    // Only remove reference if it was the current active watch
+    if (self.watch == watch) {
+        self.watch = nil;
+        self.outputLabel.text = @"Watch disconnected";
+    }
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    // Get a reference to a connected watch
-    self.watch = [[PBPebbleCentral defaultCentral] lastConnectedWatch];
+    self.currentPage = 0;
+    self.outputLabel.text = @"Waiting for Pebble...";
     
-    // If watch is connected, so additional setup
-    if(self.watch) {
-        [self.outputLabel setText:@"Watch is connected!"];
-        
-        // Register to receive events
-        [[PBPebbleCentral defaultCentral] setDelegate:self];
-        
-        // Set UUID
-        uuid_t uuidBytes;
-        NSUUID *uuid = [[NSUUID alloc] initWithUUIDString:@"3783cff2-5a14-477d-baee-b77bd423d079"];
-        [uuid getUUIDBytes:uuidBytes];
-        [[PBPebbleCentral defaultCentral] setAppUUID:[NSData dataWithBytes:uuidBytes length:16]];
-        
-        // Sign up for AppMessage
-        [self.watch appMessagesAddReceiveUpdateHandler:^BOOL(PBWatch *watch, NSDictionary *update) {
-            // Process incoming messages
-            if([update objectForKey:[NSNumber numberWithInt:KEY_BUTTON_UP]]) {
-                // Up button was pressed!
-                [self.outputLabel setText:@"UP"];
-                
-                if(currentPage > 0) {
-                    currentPage--;
-                }
-            }
-            
-            if([update objectForKey:[NSNumber numberWithInt:KEY_BUTTON_DOWN]]) {
-                // Down button pressed!
-                [self.outputLabel setText:@"DOWN"];
-                
-                if(currentPage < 2) {
-                    currentPage++;
-                }
-            }
-            
-            // Get the size of the main view and update the current page offset
-            CGSize windowSize = CGSizeMake(self.view.frame.size.width, self.view.frame.size.height);
-            [self.scrollView setContentOffset:CGPointMake(currentPage * windowSize.width, 0) animated:YES];
-            
-            return YES;
-        }];
-    } else {
-        [self.outputLabel setText:@"No watch connected!"];
-    }
+    // Set the delegate to receive PebbleKit events
+    self.central = [PBPebbleCentral defaultCentral];
+    self.central.delegate = self;
+    
+    // Register UUID
+    self.central.appUUID = [[NSUUID alloc] initWithUUIDString:@"3783cff2-5a14-477d-baee-b77bd423d079"];
+    
+    // Begin connection
+    [self.central run];
     
     // Get the size of the View
     CGSize windowSize = CGSizeMake(self.view.frame.size.width, self.view.frame.size.height);

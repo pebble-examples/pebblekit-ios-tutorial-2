@@ -6,6 +6,7 @@
 //  Copyright (c) 2013 Pebble Technology. All rights reserved.
 //
 
+#import <PebbleKit/PBDefines.h>
 #import <Foundation/Foundation.h>
 #import <UIKit/UIImage.h>
 #import <PebbleKit/gtypes.h>
@@ -15,7 +16,7 @@
  *  Refer to the documentation of Pebble's native watch app SDK on the GBitmap format.
  */
 
-@interface PBBitmap : NSObject
+PB_EXTERN_CLASS @interface PBBitmap : NSObject
 
 /**
  *  The pixel data of the bitmap.

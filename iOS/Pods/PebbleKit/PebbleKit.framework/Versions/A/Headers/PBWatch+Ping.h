@@ -6,12 +6,13 @@
 //  Copyright (c) 2012 Pebble Technology. All rights reserved.
 //
 
-#import "PebbleKit.h"
+#import <PebbleKit/PBWatch.h>
 
 @interface PBWatch (Ping)
 
 /**
  * Sends a ping to the watch.
+ *  Must be called from the main thread.
  * @param cookie A number identifying the ping.
  * @param onPong The block handler that will be called when the "pong" reply from the watch has been received.
  * @param watch The watch that sent the "pong" reply, which is "self". It is passed in to avoid retain loops.

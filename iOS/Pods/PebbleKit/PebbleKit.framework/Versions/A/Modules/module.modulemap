@@ -1,0 +1,6 @@
+framework module PebbleKit {
+  umbrella header "PebbleKit.h"
+
+  export *
+  module * { export * }
+}

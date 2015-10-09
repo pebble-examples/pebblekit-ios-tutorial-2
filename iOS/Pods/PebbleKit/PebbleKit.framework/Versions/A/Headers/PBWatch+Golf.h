@@ -6,50 +6,52 @@
 //  Copyright (c) 2013 Pebble Technology. All rights reserved.
 //
 
-#import "PebbleKit.h"
-#import <UIKit/UIKit.h>
+#import <PebbleKit/PBDefines.h>
+#import <Foundation/Foundation.h>
+#import <PebbleKit/PBWatch.h>
 
-@interface PBWatch (Golf)
+@class UIImage;
+
 
 /**
  *  The UUID of the Golf watch app.
  */
-extern NSData *PBGolfUUID;
+PB_EXTERN NSUUID *PBGolfUUID;
 
 /**
  *  The key of the "Front" field.
  *  The accompanying value must be an NSString (max. ~5 characters).
  *  @see -golfAppUpdate:onSent:
  */
-extern NSNumber *PBGolfFrontKey;
+PB_EXTERN NSNumber *PBGolfFrontKey;
 
 /**
  *  The key of the "Mid" field.
  *  The accompanying value must be an NSString (max. ~5 characters).
  *  @see -golfAppUpdate:onSent:
  */
-extern NSNumber *PBGolfMidKey;
+PB_EXTERN NSNumber *PBGolfMidKey;
 
 /**
  *  The key of the "Back" field.
  *  The accompanying value must be an NSString (max. ~5 characters).
  *  @see -golfAppUpdate:onSent:
  */
-extern NSNumber *PBGolfBackKey;
+PB_EXTERN NSNumber *PBGolfBackKey;
 
 /**
  *  The key of the "Hole" field.
  *  The accompanying value must be an NSString (max. ~5 characters).
  *  @see -golfAppUpdate:onSent:
  */
-extern NSNumber *PBGolfHoleKey;
+PB_EXTERN NSNumber *PBGolfHoleKey;
 
 /**
  *  The key of the "Par" field.
  *  The accompanying value must be an NSString (max. ~5 characters).
  *  @see -golfAppUpdate:onSent:
  */
-extern NSNumber *PBGolfParKey;
+PB_EXTERN NSNumber *PBGolfParKey;
 
 /**
  *  The command IDs that can be sent back by the Golf watch app.
@@ -61,8 +63,12 @@ typedef enum {
   GolfAppCommandSelect = 0x03,
 } GolfAppCommand;
 
+
+@interface PBWatch (Golf)
+
 /**
  *  Queries the watch whether Golf Messages are supported.
+ *  Must be called from the main thread.
  *  @param fetchedBlock The block that will be called whenthe inquiry has finished. The fetchedBlock will be called
  *  asynchronously on the queue that was originally used when calling this method.
  *  @param watch The watch on which the query was performed.
@@ -72,6 +78,7 @@ typedef enum {
 
 /**
  *  Send a command to launch the golf app on the watch that the receiver represents.
+ *  Must be called from the main thread.
  *  @param onSent The handler that will be called when the launch command has been sent or timed out (after 1.5 secs).
  *  @param error nil if the operation was successful, or else an NSError with more information why it failed.
  */
@@ -79,6 +86,7 @@ typedef enum {
 
 /**
  *  Send a command to kill the golf app on the watch that the receiver represents.
+ *  Must be called from the main thread.
  *  @param onSent The handler that will be called when the kill command has been sent or timed out (after 1.5 secs).
  *  @param error nil if the operation was successful, or else an NSError with more information why it failed.
  */
@@ -86,6 +94,7 @@ typedef enum {
 
 /**
  *  Sends an update to the golf app on the watch that the receiver represents.
+ *  Must be called from the main thread.
  *  @param update The update to send. Use one or more keys (PBGolfFrontKey, PBGolfMidKey, PBGolfBackKey, PBGolfHoleKey, PBGolfParKey)
  *  note that the value for each key MUST be of NSString type.
  *  @param onSent The handler that will be called when the update has been sent or timed out (after 1.5 secs).
@@ -96,6 +105,7 @@ typedef enum {
 
 /**
  *  Add a receive handler for incoming Golf updates that are send by the Golf watch application.
+ *  Must be called from the main thread.
  *  @param onReceive The block that will be called every time a new update message arrives.
  *  @param watch The watch that has sent the update.
  *  @param command The command as sent by the watch.
@@ -107,6 +117,7 @@ typedef enum {
 
 /**
  *  Removes a receive handler that was previously installed using -golfAppAddReceiveUpdateHandler:
+ *  Must be called from the main thread.
  *  @param opaqueHandle The handle object as returned by -golfAppAddReceiveUpdateHandler:
  *  @see -golfAppAddReceiveUpdateHandler:
  */
@@ -114,6 +125,7 @@ typedef enum {
 
 /**
  *  Assigns a custom title and icon to the golf app on the watch.
+ *  Must be called from the main thread.
  *  @discussion It is recommended to perform this as the first call after -golfGetIsSupported:
  *  to avoid changing the title and icon while it is being displayed in the menu as to avoid confusion.
  *  @param title The custom title (max. 20 bytes of UTF-8 string)
