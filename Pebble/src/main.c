@@ -7,14 +7,11 @@ static Window *s_main_window;
 static TextLayer *s_output_layer;
 
 static void send(int key, int value) {
-  // Create dictionary
   DictionaryIterator *iter;
   app_message_outbox_begin(&iter);
 
-  // Add value to send
   dict_write_int(iter, key, &value, sizeof(int), true);
 
-  // Send dictionary
   app_message_outbox_send();
 }
 
@@ -31,7 +28,6 @@ static void outbox_failed_handler(DictionaryIterator *iter, AppMessageResult rea
 static void up_click_handler(ClickRecognizerRef recognizer, void *context) {
   text_layer_set_text(s_output_layer, "Up");
 
-  // Send the corrct key for this button press. The value is irrelevant right now.
   send(KEY_BUTTON_UP, 0);
 }
 
@@ -50,7 +46,14 @@ static void main_window_load(Window *window) {
   Layer *window_layer = window_get_root_layer(window);
   GRect bounds = layer_get_bounds(window_layer);
 
-  s_output_layer = text_layer_create(GRect(0, 0, bounds.size.w, bounds.size.h));
+#if defined(PBL_SDK_2)
+  s_output_layer = text_layer_create(GRect(0, 60, bounds.size.w, bounds.size.h));
+#elif defined(PBL_SDK_3)
+  const int text_height = 20;
+  const GEdgeInsets text_insets = GEdgeInsets((bounds.size.h - text_height) / 2, 0);
+
+  s_output_layer = text_layer_create(grect_inset(bounds, text_insets));
+#endif
   text_layer_set_text(s_output_layer, "Press up or down.");
   text_layer_set_text_alignment(s_output_layer, GTextAlignmentCenter);
   layer_add_child(window_layer, text_layer_get_layer(s_output_layer));
@@ -69,7 +72,7 @@ static void init(void) {
   });
   window_stack_push(s_main_window, true);
 
-  // Open AppMessage and register callbacks
+  // Open AppMessage
   app_message_register_outbox_sent(outbox_sent_handler);
   app_message_register_outbox_failed(outbox_failed_handler);
   app_message_open(app_message_inbox_size_maximum(), app_message_outbox_size_maximum());
