@@ -1,1 +1,1 @@
-../../../../PebbleKit/PebbleKit.framework/Versions/A/Headers/PBErrors.h
+../../../../PebbleKit/PebbleKit.framework/Headers/PBErrors.h

@@ -1,1 +1,1 @@
-../../../../PebbleKit/PebbleKit.framework/Versions/A/Headers/PBWatch+AppMessages.h
+../../../../PebbleKit/PebbleKit.framework/Headers/PBWatch+AppMessages.h

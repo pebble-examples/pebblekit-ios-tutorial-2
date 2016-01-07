@@ -1,1 +1,1 @@
-../../../../PebbleKit/PebbleKit.framework/Versions/A/Headers/PBBitmap.h
+../../../../PebbleKit/PebbleKit.framework/Headers/PBBitmap.h

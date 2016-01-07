@@ -1,1 +1,1 @@
-../../../../PebbleKit/PebbleKit.framework/Versions/A/Headers/PBDataLoggingService.h
+../../../../PebbleKit/PebbleKit.framework/Headers/PBDataLoggingService.h

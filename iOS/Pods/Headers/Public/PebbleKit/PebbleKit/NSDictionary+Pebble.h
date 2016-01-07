@@ -1,1 +1,1 @@
-../../../../PebbleKit/PebbleKit.framework/Versions/A/Headers/NSDictionary+Pebble.h
+../../../../PebbleKit/PebbleKit.framework/Headers/NSDictionary+Pebble.h

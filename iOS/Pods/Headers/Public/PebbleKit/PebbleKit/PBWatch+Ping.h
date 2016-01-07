@@ -1,1 +1,1 @@
-../../../../PebbleKit/PebbleKit.framework/Versions/A/Headers/PBWatch+Ping.h
+../../../../PebbleKit/PebbleKit.framework/Headers/PBWatch+Ping.h
