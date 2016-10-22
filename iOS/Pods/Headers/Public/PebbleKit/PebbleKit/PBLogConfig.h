@@ -1,1 +1,1 @@
-../../../../PebbleKit/PebbleKit.framework/Versions/A/Headers/PBLogConfig.h
+../../../../PebbleKit/PebbleKit.framework/Headers/PBLogConfig.h

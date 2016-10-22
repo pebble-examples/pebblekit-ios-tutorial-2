@@ -1,1 +1,1 @@
-../../../../PebbleKit/PebbleKit.framework/Versions/A/Headers/PBPebbleCentral+DefaultCentral.h
+../../../../PebbleKit/PebbleKit.framework/Headers/PBPebbleCentral+DefaultCentral.h

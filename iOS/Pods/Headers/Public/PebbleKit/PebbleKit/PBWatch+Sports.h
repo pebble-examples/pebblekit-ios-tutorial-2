@@ -1,1 +1,1 @@
-../../../../PebbleKit/PebbleKit.framework/Versions/A/Headers/PBWatch+Sports.h
+../../../../PebbleKit/PebbleKit.framework/Headers/PBWatch+Sports.h

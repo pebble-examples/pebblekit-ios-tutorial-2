@@ -1,1 +1,1 @@
-../../../../PebbleKit/PebbleKit.framework/Versions/A/Headers/PebbleKit.h
+../../../../PebbleKit/PebbleKit.framework/Headers/PebbleKit.h

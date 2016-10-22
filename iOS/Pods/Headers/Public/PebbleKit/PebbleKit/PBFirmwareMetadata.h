@@ -1,1 +1,1 @@
-../../../../PebbleKit/PebbleKit.framework/Versions/A/Headers/PBFirmwareMetadata.h
+../../../../PebbleKit/PebbleKit.framework/Headers/PBFirmwareMetadata.h
